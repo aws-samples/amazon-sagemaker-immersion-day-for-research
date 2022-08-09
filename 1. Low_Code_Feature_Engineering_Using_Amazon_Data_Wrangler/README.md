@@ -7,7 +7,7 @@ Hospital readmission is an important contributor to total medical expenditures a
 
 It is estimated that 9.3% of the population in the United States have diabetes , 28% of which are undiagnosed. The 30-day readmission rate of diabetic patients is 14.4 to 22.7 % . Estimates of readmission rates beyond 30 days after hospital discharge are even higher, with over 26 % of diabetic patients being readmitted within 3 months and 30 % within 1 year. Costs associated with the hospitalization of diabetic patients in the USA were $124 billion, of which an estimated $25 billion was attributable to 30-day readmissions assuming a 20 % readmission rate. Therefore, reducing 30-day readmissions of patients with diabetes has the potential to greatly reduce healthcare costs while simultaneously improving care.
 
-![Low code]("./../img/1_low_code_1.png")
+![Low code]("./../../img/1_low_code_1.png")
 ### Experiment:
 
 * SageMaker DataWrangler to perform exploratory data analysis (EDA) and feature engineering on the feature columns.
