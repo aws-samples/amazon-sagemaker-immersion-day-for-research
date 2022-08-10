@@ -8,7 +8,7 @@ Hospital readmission is an important contributor to total medical expenditures a
 
 It is estimated that 9.3% of the population in the United States have diabetes , 28% of which are undiagnosed. The 30-day readmission rate of diabetic patients is 14.4 to 22.7 % . Estimates of readmission rates beyond 30 days after hospital discharge are even higher, with over 26 % of diabetic patients being readmitted within 3 months and 30 % within 1 year. Costs associated with the hospitalization of diabetic patients in the USA were $124 billion, of which an estimated $25 billion was attributable to 30-day readmissions assuming a 20 % readmission rate. Therefore, reducing 30-day readmissions of patients with diabetes has the potential to greatly reduce healthcare costs while simultaneously improving care.
 
-![low code](./../img/1_Low_code_1.png)
+![low code](./../img/1_low_code_1.png)
 ### Experiment:
 
 * SageMaker DataWrangler to perform exploratory data analysis (EDA) and feature engineering on the feature columns.
@@ -55,7 +55,7 @@ The commands that you have run in the terminal, will create a folder called lcnc
 * Notice the file explorer on the right has been updated with a new folder called lcnc. Double click on the folder and double click on the folder diabetic.
 * Double click on the file called explore-data.ipynb. Amazon SageMaker may prompt you to select a kernel and image. If it does select Data Science as the image and Python 3 as the Kernel, as shown here:
 
-![low code](./../img/1_[Low_cod](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/blob/main/img/1_Low_code_2.png)e_4.png)
+![low code](./../img/1_Low_code_4.png)
 ![low code](./../img/1_Low_code_5.png)
 * You have now successfully downloaded the data and opened a notebook, we will now upload the data to your S3 bucket. Note: An Amazon S3 bucket was created for you when the Amazon SageMaker Studio environment was started.
 * ![low code](./../img/1_Low_code_6.png)
@@ -73,4 +73,6 @@ The commands that you have run in the terminal, will create a folder called lcnc
 ![low code](./../img/1_Low_code_9.png)
 
 In the next section we will import the datasets into Data Wrangler via the SageMaker Studio User Interface (UI).
+
+[Preprocessing using AWS Data Wrangler](./Preprocessing_Using_Data_Wrangler.md)
 
