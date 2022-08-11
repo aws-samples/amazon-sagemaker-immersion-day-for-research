@@ -26,9 +26,9 @@
     * Uses SageMaker Experiments behind the scenes to automatically capture data and model lineage for each of the candidate models trained during the process.
 
 ## Autopilot
-* For the Autopilot experiment, we will be using the transformed features exported via Data Wrangler to S3. From the Autopilot interface, specify the experiment settings as shown in the screenshots below and hit Create Experiment.
-
+* For the Autopilot experiment, we will be using a pre-transformed dataset which is similar to the result of the transformed features exported via Data Wrangler to S3. To Launch Autopilot on SageMaker Studio, click on File -> New -> Experiment. On the Create experiment page, fill in the details as shown below.
 ![](./../img/3_low_code_0.png)
+On the 'deployment and advanced settings' page, select Runtime from the menu on the left and specify 'Max candidates' as 10. The default is 250, but for the purpose of the lab, we limit to 10 candidates to see the results faster. Click on 'Review and Create' and then click on 'Create Experiment'. 
 ![](./../img/3_low_code_4.png)
 * Once the Autopilot experiment starts, you will see it complete stages one by one starting with the pre-processing stage as shown below.
 ![](./../img/3_low_code_5.png)
