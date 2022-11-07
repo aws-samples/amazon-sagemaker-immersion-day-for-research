@@ -9,8 +9,8 @@ This repository contains content for an immersion day that focusses on the follo
 5) [Computer vision : Build, train and deploy a computer vision model.](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/5.&#32;Computer_Vision/mnist_cpu)
 6) [Natural Language processing: Build, train and deploy a Natural Language Processing model.](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/6.&#32;Natural_Language_Processing)
 
-
-
+If you are at an event with an AWS event engine provided account then start [here](0.%20Setup/Readme.md)    
+To start the first Lab (Low Code Feature Engineering), go [here](1.%20Low_Code_Feature_Engineering_Using_Amazon_Data_Wrangler/README.md) 
 
 ## License
 
