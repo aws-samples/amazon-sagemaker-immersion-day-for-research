@@ -8,6 +8,8 @@ This repository contains content for an immersion day that focusses on the follo
 4) [HIV Inhibitor prediction using GNN (Bring your own algorithm to Sagemaker)](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/4.&#32;Hiv_Inhibitor_Prediction_DGL)
 5) [Computer vision : Build, train and deploy a computer vision model.](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/5.&#32;Computer_Vision/mnist_cpu)
 6) [Natural Language processing: Build, train and deploy a Natural Language Processing model.](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/6.&#32;Natural_Language_Processing)
+7) [ GeoSpatial : Amazon SageMaker Semantic Segmentation on Satellite Imagery](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/7.%20Geospatial/amazon-sagemaker-satellite-imagery-segmentation)  
+[Geospatial : Deep Learning on AWS Open Data Registry: Automatic Building and Road Extraction from Satellite and LiDAR ](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/7.%20Geospatial/aws-open-data-satellite-lidar-tutorial)
 
 If you are at an event with an AWS event engine provided account then start [here](0.%20Setup/Readme.md)    
 To start the first Lab (Low Code Feature Engineering), go [here](1.%20Low_Code_Feature_Engineering_Using_Amazon_Data_Wrangler/README.md) 
