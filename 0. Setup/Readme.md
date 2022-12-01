@@ -3,6 +3,7 @@
 For this workshop you’ll get access to a temporary AWS Account already pre-configured with Amazon SageMaker Studio. Follow the steps in this section to login to your AWS Account and download the workshop material.
 
 ### 1. To get started navigate to - https://dashboard.eventengine.run/login 
+Use e920-174536be64-f7 as the event hash
 
 ![](./../img/setup2.png)
 
