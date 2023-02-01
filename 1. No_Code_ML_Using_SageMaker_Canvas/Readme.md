@@ -9,14 +9,14 @@ In this lab, you will learn how to use Amazon Sagemaker Canvas and analyze a his
 
 Hospital readmission is an important contributor to total medical expenditures and is an emerging indicator of quality of care. Diabetes, similar to other chronic medical conditions, is associated with increased risk of hospital readmission.
 
-The sample dataset we are going to use in this lab is a sampled version of the "Diabetes 130-US hospitals for years 1999-2008 Data Set" 
+The sample dataset we are going to use in this lab is a sampled version of the "[Diabetes 130-US hospitals for years 1999-2008 Data Set](https://archive.ics.uci.edu/ml/datasets/diabetes+130-us+hospitals+for+years+1999-2008)" 
 
 (Beata Strack, Jonathan P. DeShazo, Chris Gennings, Juan L. Olmo, Sebastian Ventura, Krzysztof J. Cios, and John N. Clore, “Impact of HbA1c Measurement on Hospital Readmission Rates: Analysis of 70,000 Clinical Database Patient Records,” BioMed Research International, vol. 2014, Article ID 781670, 11 pages, 2014. ). It contains historical data including over fifteen features with patient and hospital outcomes. The dataset contains approximately ~50,000 rows
 
 ##  Import the dataset in Canvas and Create model
 
 
-The first step is to download the sample dataset. You can download it from [here](diabetic-readmission.csv)
+The first step is to download the sample dataset. You can download it from [here](diabetic-readmission.csv) to your laptop/local machine.
 
 
 In SageMaker Canvas, select 'Datasets' from the menu on the left and then click on 'Import'. Click on the 'Upload' button and the drag and drop the diabetes-readmission.csv file you've just downloaded, then click Upload at the bottom of the page. Once the upload is complete, you can now click the top-right Close button. You should now see the file uploaded to SageMaker Canvas.
@@ -69,9 +69,9 @@ Before building model, you can Preview model that analyses dataset and gives us 
 
 ![Preview model](images/preview-model.png)
 
-After analyzing the dataset and modifying columns based on impact, you can choose to build as either do Standard Build - which usually takes over 2-4 hours giving better accuracy or 'Quick Build' which usually takes 2-5 minutes however compromising on accuracy. Please note that you cannot share Quick Build models.  We will use the Quick Build.
+After analyzing the dataset and modifying columns based on impact, you can choose to build as either do Standard Build - which usually takes over 2-4 hours giving better accuracy or 'Quick Build' which usually takes 5-15 minutes however compromising on accuracy. Please note that you cannot share Quick Build models.  We will use the Quick Build.
 
-SageMaker Canvas does some level of pre-processing and data balancing when building a Standard Model. Some of the algorithms used by SageMaker Canvas already handle imbalanced data through some of their hyper-parameters.
+
 
 Now, we wait approximately 5-15 minutes hours. This could vary for you. Once done, Canvas will automatically move to the Analyze tab, to show us the results of our quick training. The analysis performed using quick build estimates that our model is able to predict the right outcome 59.6% of the time.
 
@@ -82,11 +82,13 @@ Don't worry if the numbers in the below images differ from yours. Machine Learni
 When we move to the Scoring portion of our analysis, we can see a plot representing the distribution of our predicted values with respect to the actual values. Notice that most customers are unlikely to get readmitted. If you want to learn more about how Canvas uses SHAP baselines to bring explainability to Machine Learning, you can check the "[Evaluating Your Model's](https://docs.aws.amazon.com/sagemaker/latest/dg/canvas-evaluate-model.html) Performance in Amazon SageMaker Canvas" section 
 of the Canvas documentation, as well as the page for [SHAP Baselines for Explainability ](https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-feature-attribute-shap-baselines.html)
 
-
+![scoring](images/scoring.png)
 
 You are most interested in the patients who are likely to get readmitted and how well the model predicts this subset of patients. To take a closer look at the results, you can click on the Advanced metrics link on the right.
 
 This will display a matrix that allows you to more closely examine the results. In machine learning, this is referred to as a confusion matrix.
+
+![advanced](images/advanced.png)
 
 For 'not getting readmitted' class, select class no from the right panel.
 
@@ -94,7 +96,7 @@ In machine learning, the accuracy of the model is defined as the number of corre
 
 However, you are more interested in measuring how well the model predicted patient readmission cases. The model correctly predicted 5119 customers would not get readmitted (True Positive - TP). However, it incorrectly predicted that 3210 customers would get readmitted, when in fact they would (False negatives - FN). In machine learning, a ratio used to measure this is TP / (TP + FN). This is referred to Recall. The advanced metrics page calculates and displays a recall score of 38.24% for this model.
 
-![advanced](images/advanced.png)
+
 
 ## Using the model to generate predictions
 
