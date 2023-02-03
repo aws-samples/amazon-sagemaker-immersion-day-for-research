@@ -2,8 +2,8 @@
 
 This repository contains content for an immersion day that focusses on the following
 
-1) [No Code Machine Learning Usin Amazon SageMaker Canvas]()
-2) [Low code Feature Engineering using Amazon Data Wrangler](https://catalog.us-east-1.prod.workshops.aws/workshops/f560a788-af64-4e5a-a02c-a6c88516ab02/en-US/industrylab/healthcare/readmission)    
+1) [No Code Machine Learning Usin Amazon SageMaker Canvas](1.%20No_Code_ML_Using_SageMaker_Canvas/Readme.md)
+2) [Low code Feature Engineering using Amazon Data Wrangler](2.%20AutoML_Using_SageMaker_Pilot/README.md)    
    
 3) [AutoML using SageMaker autopilot]( https://catalog.us-east-1.prod.workshops.aws/workshops/f560a788-af64-4e5a-a02c-a6c88516ab02/en-US/industrylab/healthcare/readmission/part-2 )  
 4) [Predict average hospital spending using SageMaker's built-in algorithm](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/blob/main/3.&#32;Medicare_Hospital_Cost_Prediction/Jupyter_Notebook_Medicare_Hospital_Cost_Prediction.ipynb)
