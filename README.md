@@ -14,8 +14,9 @@ This repository contains content for an immersion day that focusses on the follo
 
    [Computer vision 2 : Training a Tensorflow Model on MNIST](7.%20Computer_Vision/mnist_cpu/get_started_mnist_train.ipynb)
 8) 
-   [Natural Language processing: Train a Medical Specialty Detector on SageMaker Using HuggingFace Transformers](8.%20Natural_Language_Processing/Classify_Medical_Specialty_NLP_Huggingface_Transformers_GPU/1_sagemaker_medical_specialty_using_transfomers.ipynb)
-   [Natural Language Processing: Fine tune a PyTorch BERT model](8.%20Natural_Language_Processing/Bert_NLP_CPU/bert-sm-python-SDK.ipynb)
+   
+   [Natural Language processing 1: Train a Medical Specialty Detector on SageMaker Using HuggingFace Transformers](8.%20Natural_Language_Processing/Classify_Medical_Specialty_NLP_Huggingface_Transformers_GPU/1_sagemaker_medical_specialty_using_transfomers.ipynb)
+   [Natural Language Processing 2: Fine tune a PyTorch BERT model](8.%20Natural_Language_Processing/Bert_NLP_CPU/bert-sm-python-SDK.ipynb)
 9)  
     [ GeoSpatial 1: semantic segmentation model on a SpaceNet dataset](9.%20Geospatial/amazon-sagemaker-satellite-imagery-segmentation/README.md)  
     [GeoSpatial 2: Deep Learning on AWS Open Data Registry: Automatic Building and Road Extraction from Satellite and LiDAR](9.%20Geospatial/aws-open-data-satellite-lidar-tutorial/README.md)
