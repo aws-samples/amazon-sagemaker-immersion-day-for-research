@@ -17,8 +17,8 @@ This repository contains content for an immersion day that focusses on the follo
    [Natural Language processing: Train a Medical Specialty Detector on SageMaker Using HuggingFace Transformers](8.%20Natural_Language_Processing/Classify_Medical_Specialty_NLP_Huggingface_Transformers_GPU/1_sagemaker_medical_specialty_using_transfomers.ipynb)
    [Natural Language Processing: Fine tune a PyTorch BERT model](8.%20Natural_Language_Processing/Bert_NLP_CPU/bert-sm-python-SDK.ipynb)
 9)  
-    [ GeoSpatial : semantic segmentation model on a SpaceNet dataset](9.%20Geospatial/amazon-sagemaker-satellite-imagery-segmentation/README.md)  
-    [GeoSpatial : Deep Learning on AWS Open Data Registry: Automatic Building and Road Extraction from Satellite and LiDAR](9.%20Geospatial/aws-open-data-satellite-lidar-tutorial/README.md)
+    [ GeoSpatial 1: semantic segmentation model on a SpaceNet dataset](9.%20Geospatial/amazon-sagemaker-satellite-imagery-segmentation/README.md)  
+    [GeoSpatial 2: Deep Learning on AWS Open Data Registry: Automatic Building and Road Extraction from Satellite and LiDAR](9.%20Geospatial/aws-open-data-satellite-lidar-tutorial/README.md)
 
 
 If you are at an event with an AWS event engine provided account then start [here](0.%20Setup/Readme.md)    
