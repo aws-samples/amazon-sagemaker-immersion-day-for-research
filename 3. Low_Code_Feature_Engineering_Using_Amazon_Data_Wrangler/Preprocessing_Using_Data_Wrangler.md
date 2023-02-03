@@ -4,7 +4,7 @@
 * Initialize SageMaker Data Wrangler via SageMaker Studio UI.
   * There are two ways that you can do this, either from the Launcher screen as depicted here:
    ![](./../img/2_low_code_1.png)
-  * Or from the SageMaker resources menu on the left, selecting Data Wrangler, and new flow
+  * Or from the SageMaker resources menu on the left, selecting Data Wrangler, and "Import Data"
    ![](./../img/2_low_code_2.png)
    ![](./../img/2_low_code_3.png)
   * Takes a few minutes to load.
@@ -12,7 +12,7 @@
   * Once Data Wrangler is loaded, you should be able to see it under running instances and apps as shown below.
   ![](./../img/2_low_code_5.png)
   * Next, make sure you have copied the data paths from the previous section, as you will need them in this section.
-  * Once Data Wrangler is up and running, you can see the following data flow interface with options for import, creating data flows and export as shown below.
+  * Once Data Wrangler is up and running, you can see the following data flow interface with options for importing data and creating data flows as shown below.
     ![](./../img/2_low_code_6.png) 
   * Make sure to rename the untitled.flow to your preference (for e.g., join.flow)
   * Paste the S3 URL for the diabetic_readmission.csv file into the search box below
@@ -38,17 +38,17 @@
 ![](./../img/2_low_code_11.png)
 * From the Transforms interface, click "Add step". Data Wrangler provides 400+ transforms that you can choose.
 ![](./../img/2_low_code_12.png)
-* Lets drop all the redundant columns based on our previous analyses. First, lets drop the max_glu_serum column as shown in the screenshot below.
-![](./../img/2_low_code_13.png)
-* Similar to the above transform, lets also drop columns - a1c_result, gender, num_procedures and num_outpatient,
+* Lets drop all the redundant columns based on our previous analyses. Lets drop the max_glu_serum, a1c_result, gender, num_procedures and num_outpatient columns as shown in the screenshot below.
+
+   ![](./../img/2_low_code_13.png)
 * Next, lets one hot encode the race column using the encode categorical option as shown below.
 ![](./../img/2_low_code_14.png)
 ![](./../img/2_low_code_15.png)
 * Next, click on Back to data flow to head back to the data flow interface. You can also export the output the transformed features so far directly into S3 by clicking on the Export data button.
 ![](./../img/2_low_code_16.png)
-* Click on the export tab and select all the transforms to be exported as shown below.
+* Add an export step as shown below, and choose one of the many options that are available.
 ![](./../img/2_low_code_17.png)
-* For exporting, choose one of the many options that are available.
-![](./../img/2_low_code_18.png)
+
+You can also choose to create a job from your flow, by clicking on the "Create Job" button.
 
 In the next part we will look at generating the best model using SageMaker Autopilot (AutoML)
