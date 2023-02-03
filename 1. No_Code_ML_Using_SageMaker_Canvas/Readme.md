@@ -18,10 +18,21 @@ The sample dataset we are going to use in this lab is a sampled version of the "
 
 The first step is to download the sample dataset. You can download it from [here](diabetic-readmission.csv) to your laptop/local machine.
 
+Go to Amazon S3 from AWS Management console and open "sagemaker-studio-*" folder or any folder that can be accessed by SageMaker Canvas.
 
-In SageMaker Canvas, select 'Datasets' from the menu on the left and then click on 'Import'. Click on the 'Upload' button and the drag and drop the diabetes-readmission.csv file you've just downloaded, then click Upload at the bottom of the page. Once the upload is complete, you can now click the top-right Close button. You should now see the file uploaded to SageMaker Canvas.
+In the S3 console, click on the sagemaker-studio-* bucket.
 
-### Create Model in SageMaker Canvas
+![Studio bucket](images/studio-bucket.png)
+
+Click Upload.
+On the Upload page, drag and drop the diabetes-readmission.csv file you've just downloaded, then click Upload at the bottom of the page. Once the upload is complete, you can now click the top-right Close button. You should now see the file uploaded in your bucket.
+
+![S3 file upload](images/s3-file-upload.png)
+
+# Creating model in SageMaker Canvas
+
+In SageMaker Canvas, select 'Datasets' from the menu on the left and then click on 'Import'. Click on the 'S3' button and select the diabetes csv file from the bucket that you uploaded teh file to in the previous step.
+Click on 'Import Data'.
 
 Now, let's go to Amazon SageMaker Canvas back to the Models section of the web page, by clicking the second button on the left menu.
 
