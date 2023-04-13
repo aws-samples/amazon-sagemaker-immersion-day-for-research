@@ -13,13 +13,16 @@ This repository contains workshops and notebooks that you can use to learn more 
 6) [HIV Inhibitor prediction using GNN (Bring your own algorithm to Sagemaker)](6.%20Computer_Vision/) : This example notebook focuses on training multiple Graph neural network models using Deep Graph Librar and deploying it using Amazon SageMaker
 7) 
    [Computer vision 1 : 3D segmentation example of integrating the MONAI framework into Amazon SageMaker](7.%20Computer_Vision/Spleen_Segmentation_GPU/README.md) : This tutorial shows how to run SageMaker managed training using MONAI for 3D Segmentation and SageMaker managed inference after model training. This notebook needs access to GPU instances for training.
+
    [Computer vision 2 : Training a Tensorflow Model on MNIST](7.%20Computer_Vision/mnist_cpu/get_started_mnist_train.ipynb) : This notebook shows how to train and deploy a tensorflow model to classify MNIST images. The notebooks can run on CPU.
 8) 
    [Natural Language processing 1: Train a Medical Specialty Detector on SageMaker Using HuggingFace Transformers](8.%20Natural_Language_Processing/Classify_Medical_Specialty_NLP_Huggingface_Transformers_GPU/1_sagemaker_medical_specialty_using_transfomers.ipynb) : In this workshop, we will show how you can train an NLP classifier using trainsformers from [HuggingFace](https://huggingface.co/).  we will use the SageMaker HuggingFace supplied container to train an algorithm that will distinguish between physician notes that are either part of the General Medicine (encoded as 0), or Radiology (encoded as 1) medical specialties. 
+
    [Natural Language Processing 2: Fine tune a PyTorch BERT model](8.%20Natural_Language_Processing/Bert_NLP_CPU/bert-sm-python-SDK.ipynb) : The notebook demonstrates how to use Amazon SageMaker to fine tune a PyTorch BERT model and deploy it with Elastic Inference. We walk through our dataset, the training process, and finally model deployment.
 
 9)  
     [ GeoSpatial 1: semantic segmentation model on a SpaceNet dataset](9.%20Geospatial/amazon-sagemaker-satellite-imagery-segmentation/README.md) : In this workshop, we will demonstrate how to train and host a semantic segmentation model to detect buildings in satellite images. In order to train this model, we will be using the Semantic Segmentation built in-algorithm on the SpaceNet dataset with the Deeplab-v3 backbone.
+    
     [GeoSpatial 2: Deep Learning on AWS Open Data Registry: Automatic Building and Road Extraction from Satellite and LiDAR](9.%20Geospatial/aws-open-data-satellite-lidar-tutorial/README.md) : This section has two notebooks that use Deep Learning on AWS Open Data Registry to perform Automatic Building and Road Extraction from Satellite and LiDAR.
 
 
