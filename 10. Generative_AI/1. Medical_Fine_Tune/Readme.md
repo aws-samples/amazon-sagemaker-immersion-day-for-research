@@ -21,7 +21,7 @@ The notebook show how you can train flan-t5-small using your own dataset in its 
 ### Part2. fine-tuning flan-t5 using SageMaker Training
 In this part, we will use the SageMaker HuggingFace supplied container to train flan-t5-base in the notebook(summerizing_medical_text_flan-t5_sagemaker.ipynb).
 
-The notebook sho how you can train flan-t5-small using [SageMake Training](https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-training.html).
+The notebook show how you can train flan-t5-base using [SageMake Training](https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-training.html).
 
 SageMaker Training allows you to train larger data and models like flan-t5-large if needed. 
 
