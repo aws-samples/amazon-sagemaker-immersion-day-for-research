@@ -10,7 +10,7 @@ The dataset is for summerizing consumer health questions.
 Please download the dataset from its github repository (https://github.com/abachaa/MeQSum) before start.
 
 ## Text Summerization for healthcare using Large Language Model (LLM)
-In this sample, we will show how you can fine-tune LLM using healthcare text data.
+In this sample, we will show how you can fine-tune LLM using healthcare to summerize text data.
 There are two parts for this section.
 
 ### Part1. fine-tuning flan-t5 in notebook local
