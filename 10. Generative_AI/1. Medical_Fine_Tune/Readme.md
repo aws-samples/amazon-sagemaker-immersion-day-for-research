@@ -1,10 +1,11 @@
 # Text Summerization for healthcare
 ## Background and Motivation
 Generative AI has a lot of potential uses in healthcare, including patient care, medical research and supporting doctors.
-While many challenges need to be addressed such as responsibility of its output, quality contorol of production models, the benefits of generative AI in healthcare might be big.
+While many challenges need to be addressed such as responsibility of its output, quality control of production models, the benefits of generative AI in healthcare might be big.
 
 One of usecases is text summerization which is a Natural Language Processing task for healthcare.
 In this sample, we will use MeQSum Dataset[1] for the task.
+The dataset is for summirizing consumer health questions.
 
 Please download the dataset from its github repository (https://github.com/abachaa/MeQSum) before start.
 
