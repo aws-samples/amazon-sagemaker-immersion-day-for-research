@@ -1,16 +1,16 @@
-# Text Summerization for healthcare
+# Text Summarization for healthcare
 ## Background and Motivation
 Generative AI has a lot of potential uses in healthcare, including patient care, medical research and supporting doctors.
 While many challenges need to be addressed such as responsibility of its output, quality control of production models, the benefits of generative AI in healthcare might be big.
 
-One of usecases is text summerization which is a Natural Language Processing task for healthcare.
+One of usecases is text summarization which is a Natural Language Processing task for healthcare.
 In this sample, we will use MeQSum Dataset[1] for demonstrating the task.
-The dataset is for summerizing consumer health questions.
+The dataset is for summarizing consumer health questions.
 
-Please download the dataset from its github repository (https://github.com/abachaa/MeQSum) before start.
+Please download the dataset from its github repository (https://github.com/abachaa/MeQSum) before starting.
 
 ## Text Summerization for healthcare using Large Language Model (LLM)
-In this sample, we will show how you can fine-tune LLM using healthcare data to summerize it.
+In this sample, we will show how you can fine-tune LLM using healthcare data to summarize it.
 There are two parts for this section.
 
 ### Part1. fine-tuning flan-t5 in notebook local
