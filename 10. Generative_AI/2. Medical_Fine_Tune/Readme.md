@@ -7,8 +7,6 @@ One of usecases is text summarization which is a Natural Language Processing tas
 In this sample, we will use MeQSum Dataset[1] for demonstrating the task.
 The dataset is for summarizing consumer health questions.
 
-Please download the dataset from its github repository (https://github.com/abachaa/MeQSum) before starting.
-
 ## Text Summerization for healthcare using Large Language Model (LLM)
 In this sample, we will show how you can fine-tune LLM using healthcare data to summarize it.
 There are two parts for this section.
@@ -22,6 +20,8 @@ The notebook show how you can train flan-t5-small using your own dataset on the 
 In this part, we will use the SageMaker HuggingFace supplied container to train flan-t5-base in the notebook(summerizing_medical_text_flan-t5_sagemaker.ipynb).
 
 The notebook show how you can train flan-t5-base using [SageMake Training](https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-training.html).
+
+When you open the notebook, select ml.t3.medium as the instance and Data Science 3.0 as the kernel.
 
 SageMaker Training allows you to train larger data and models like flan-t5-large if needed. 
 

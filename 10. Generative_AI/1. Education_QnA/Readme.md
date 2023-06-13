@@ -2,6 +2,8 @@ Welcome to the first lab for Large Language models. In this lab, we will first d
 
 The notebooks for this lab are at https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/10.%20Generative_AI/1.%20Education_QnA
 
+Use a ml.t3.medium instance and Data Science kernel for this notebook.
+
 ## SageMaker Jumpstart for Large Language Models
 SageMaker JumpStart provides pretrained, open-source models for a wide range of problem types to help you get started with machine learning. You can access the pretrained models, solution templates, and examples through the JumpStart landing page in Amazon SageMaker Studio. You can also access JumpStart models using the SageMaker Python SDK.
 

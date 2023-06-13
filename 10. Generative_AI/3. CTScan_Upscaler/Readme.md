@@ -1,0 +1,7 @@
+##Generating Super-Resolution medical images
+
+Super-resolution is a technique that aims to improve the quality of images, by taking a low-resolution image and enhancing it to make it look sharper and clearer. This process is extensively explored in the field of image processing. However, there are a couple of problems that researchers often encounter. One issue is related to the methods that use interpolation. Interpolation-based techniques try to estimate the missing details in the low-resolution image by making educated guesses based on the available information. Unfortunately, these methods often result in blurry output, where the enhanced image lacks sharpness and fine details.
+
+Stable Diffusion uses an AI algorithm to upscale images, eliminating the need for manual work that may require manually filling gaps in an image. It has been trained on millions of images and can accurately predict high-resolution images, resulting in a significant increase in detail compared to traditional image upscalers. Additionally, unlike non-deep-learning techniques such as nearest neighbor, Stable Diffusion takes into account the context of the image, using a textual prompt to guide the upscaling process.
+
+In this notebook, we demonstrate how to enhance CT Scans.
