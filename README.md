@@ -27,10 +27,10 @@ This repository contains workshops and notebooks that you can use to learn more 
 
 10) Generative AI
 
-       - Medical Fine Tuning (coming soon)
-       - Education QnA (coming soon)
-       - XRay_Upscaler (coming soon)
-       - Synthetic_Satellite (coming soon)
+       - [Medical Fine Tuning](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/10.%20Generative_AI/2.%20Medical_Fine_Tune)
+       - [Education QnA](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/10.%20Generative_AI/1.%20Education_QnA)
+       - [CTScan Upscaler](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/10.%20Generative_AI/3.%20CTScan_Upscaler)
+       - [Synthetic Satellite](https://github.com/aws-samples/amazon-sagemaker-immersion-day-for-research/tree/main/10.%20Generative_AI/4.%20Synthetic_Satellite)
 
 If you are at an event with an AWS event engine provided account then start [here](0.%20Setup/Readme.md)    
 
