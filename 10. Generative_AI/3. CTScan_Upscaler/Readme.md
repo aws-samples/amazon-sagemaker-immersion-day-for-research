@@ -1,4 +1,4 @@
-##Generating Super-Resolution medical images
+## Generating Super-Resolution medical images
 
 Super-resolution is a technique that aims to improve the quality of images, by taking a low-resolution image and enhancing it to make it look sharper and clearer. This process is extensively explored in the field of image processing. However, there are a couple of problems that researchers often encounter. One issue is related to the methods that use interpolation. Interpolation-based techniques try to estimate the missing details in the low-resolution image by making educated guesses based on the available information. Unfortunately, these methods often result in blurry output, where the enhanced image lacks sharpness and fine details.
 
