@@ -14,7 +14,7 @@ There are two parts for this section.
 ### Part1. fine-tuning flan-t5 in notebook local
 In this part, we will use [HuggingFace](https://huggingface.co/) to train flan-t5-small in the notebook (summerizing_medical_text-flan-t5.ipynb).
 
-The notebook show how you can train flan-t5-small using your own dataset on the local notebook instance. When you open the notebook, select ml.p3.2xlarge as the instance and Data Science 3.0 as the kernel.
+The notebook show how you can train flan-t5-small using your own dataset on the local notebook instance. When you open the notebook, select ml.g4dn.xlarge as the instance and Data Science 3.0 as the kernel.
 
 ### Part2. fine-tuning flan-t5 using SageMaker Training
 In this part, we will use the SageMaker HuggingFace supplied container to train flan-t5-base in the notebook(summerizing_medical_text_flan-t5_sagemaker.ipynb).
