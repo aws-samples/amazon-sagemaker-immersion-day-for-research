@@ -7,5 +7,5 @@ Stable Diffusion を利用すると、簡単にテキストから画像を生成
 ## なぜ Stable Diffusion を Fine-tune するのか？
 Stable Diffusion は画像生成において優れていますが、特定の分野に特化した画像の質はあまり高くないかもしれません。たとえば、このノートブックでは、衛星画像を生成しようとします。デフォルトで生成される衛生画像は、いくつかの特徴（高速道路など）をよく表していますが、高速道路を含む衛生画像の品質を向上させるために、実際の衛生画像を用いて Stable Diffusion を Fine-tuning します。
 
-## How do we fine-tune
+## Fine-tuneの方法
 Stable Diffusion を Fine-tune するために、[こちら](https://dreambooth.github.io/) で説明のある DtreamBooth という方法を使います。
