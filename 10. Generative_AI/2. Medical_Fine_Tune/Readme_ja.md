@@ -12,13 +12,13 @@
 このセクションは2つのパートに分かれています。
 
 ### Part1. Notebook 上で flan-t5 を Fine-tuning する
-このパートでは、ノートブック(summerizing_medical_text-flan-t5.ipynb)を使います。
+このパートでは、ノートブック(summerizing_medical_text-flan-t5_ja.ipynb)を使います。
 [HuggingFace](https://huggingface.co/)を用いて、flan-t5-small を学習します。
 
 このノートブックでは、ノートブックインスタンス上で自分のデータセットを使って flan-t5-small を学習させる方法を紹介しています。インスタンスには ml.g4dn.xlarge を、カーネルには Data Science 3.0 を選択します。
 
 ### Part2. SageMaker Training を使って flan-t5 を Fine-tuning する
-このパートでは、ノートブック(summerizing_medical_text_flan-t5_sagemaker.ipynb)を使います。
+このパートでは、ノートブック(summerizing_medical_text_flan-t5_sagemaker_ja.ipynb)を使います。
 SageMaker の HuggingFace コンテナを使用して、の flan-t5-base を学習します。
 
 このノートブックでは、[SageMake Training](https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-training.html) を使って、flan-t5-baseをトレーニングする方法が書かれています。
