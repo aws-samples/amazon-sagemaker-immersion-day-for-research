@@ -162,8 +162,6 @@ else:
     model.cuda()
     model.eval()
     
-    # might need to update MusicgenSinusoidalPositionalEmbedding class in modeling_musicgen.py line 174 to self.make_weights(seq_len + self.weights.size(0), self.embedding_dim)
-    # audio prompt works better with model trained with more epochs and less loss
     if args.audioprompt: 
         wav,sr = torchaudio.load(f'{test_data_dir}/your .wav test file')
         wav = torchaudio.functional.resample(wav, sr, sample_rate)
