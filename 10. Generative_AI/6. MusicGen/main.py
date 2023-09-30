@@ -14,7 +14,8 @@ from accelerate import Accelerator
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('mode',default='train',required=False)
+parser.add_argument('mode',default='train')
+parser.add_argument('-ap','--audioprompt',action='store_true')
 args = parser.parse_args()
 
 data_dir = 'your audio data directory'
@@ -154,7 +155,6 @@ if args.mode == 'train':
     accelerator.save_model(decoder, ckpt_dir)
 else:    
     num_samples = 1
-    use_audio_prompt = True
     output_audio_path = 'output.wav'
     model = MusicgenForConditionalGeneration.from_pretrained(model_id)
     ckpt = torch.load(f'{ckpt_dir}/pytorch_model.bin')
@@ -164,7 +164,7 @@ else:
     
     # might need to update MusicgenSinusoidalPositionalEmbedding class in modeling_musicgen.py line 174 to self.make_weights(seq_len + self.weights.size(0), self.embedding_dim)
     # audio prompt works better with model trained with more epochs and less loss
-    if use_audio_prompt: 
+    if args.audioprompt: 
         wav,sr = torchaudio.load(f'{test_data_dir}/your .wav test file')
         wav = torchaudio.functional.resample(wav, sr, sample_rate)
         wav = wav.mean(dim=0, keepdim=True).squeeze()

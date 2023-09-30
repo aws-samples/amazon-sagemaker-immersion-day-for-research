@@ -57,8 +57,14 @@ accelerate launch main.py train
 
 ### Generate
 
-Generate using only 1 gpu
+Generate without audio prompt
 
 ```bash
 python main.py gen
+```
+
+Generate with audio prompt
+
+```bash
+python main.py gen --audioprompt
 ```
