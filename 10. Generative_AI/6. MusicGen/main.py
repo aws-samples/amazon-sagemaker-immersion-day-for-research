@@ -14,13 +14,16 @@ from accelerate import Accelerator
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('mode',default='train')
-parser.add_argument('-ap','--audioprompt',action='store_true')
+parser.add_argument('-train','--train',action='store_true')
+parser.add_argument('-datadir', '--datadir')
+parser.add_argument('-testdatapath','--testdatapath') 
+parser.add_argument('-ckptdir','--ckptdir')
+parser.add_argument('-audioprompt','--audioprompt',action='store_true')
 args = parser.parse_args()
 
-data_dir = 'your audio data directory'
-test_data_dir = 'your audio test data directory'
-ckpt_dir = 'your checkpoint directory'
+data_dir = args.datadir
+test_data_path = args.testdatapath
+ckpt_dir = args.ckptdir
 model_id = "facebook/musicgen-small"
 lr = 1e-5
 epochs =  1
@@ -91,7 +94,7 @@ def one_hot_encode(tensor, num_classes):
 
     return one_hot
 
-if args.mode == 'train':
+if args.train:
     accelerator = Accelerator(gradient_accumulation_steps=gradient_accumulation_steps)
     dataset = AudioDataset(data_dir)
     model = MusicgenForConditionalGeneration.from_pretrained(model_id)
@@ -163,7 +166,7 @@ else:
     model.eval()
     
     if args.audioprompt: 
-        wav,sr = torchaudio.load(f'{test_data_dir}/your .wav test file')
+        wav,sr = torchaudio.load(test_data_path)
         wav = torchaudio.functional.resample(wav, sr, sample_rate)
         wav = wav.mean(dim=0, keepdim=True).squeeze()
         sample = wav[:len(wav)//4].numpy()

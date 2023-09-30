@@ -39,6 +39,8 @@ use_cpu: false
 
 ## Environment Setup
 
+Setup virtual environment and install dependencies
+
 ```bash
 python3 -m venv venv # create virtual environment
 source venv/bin/activate
@@ -47,24 +49,31 @@ pip install requirements.txt # install dependencies
 
 ## Run
 
+### Variable Update
+
+Adjust any of the training parameters as required in main.py.  
+E.g. epochs, lr, batch_size etc.
+
 ### Train
 
-Train using accelerate on multi-gpus
+Train using accelerate on multi-gpus. The model checkpoint is named 'pytorch_model.bin' by default.
 
 ```bash
-accelerate launch main.py train
+accelerate launch main.py --train --datadir 'your data dir' --ckptdir 'dir to save model checkpoint'
 ```
 
 ### Generate
 
+The output file for either mode will be named 'output.wav'.
+
 Generate without audio prompt
 
 ```bash
-python main.py gen
+python main.py --ckptdir 'your model checkpoint dir' --testdatapath 'full path to test audio (.wav)' 
 ```
 
 Generate with audio prompt
 
 ```bash
-python main.py gen --audioprompt
+python main.py --ckptdir 'your model checkpoint dir' --testdatapath 'full path to test audio (.wav)' --audioprompt
 ```
