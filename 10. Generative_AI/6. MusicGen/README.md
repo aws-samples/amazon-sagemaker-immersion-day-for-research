@@ -46,13 +46,18 @@ pip install requirements.txt # install dependencies
 ```
 
 ## Run
+
 ### Train
 
+Train using accelerate on multi-gpus
+
 ```bash
-python main.py train
+accelerate launch main.py train
 ```
 
 ### Generate
+
+Generate using only 1 gpu
 
 ```bash
 python main.py gen
