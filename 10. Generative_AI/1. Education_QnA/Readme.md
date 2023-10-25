@@ -24,3 +24,18 @@ In the accompanying notebook, you will first deploy a model using the jumpstart 
    4.  What is the main gist of the paper?
    5.  What is the problem being solved?
    6.  What is the conclusion of the paper?
+
+
+#### Set Up Llama-2-7b-chat endpoint
+1. Go to 'Home' page in SageMaker Studio.
+2. Click 'JumpStart' tab in the Home page (Within the 'Prebuilt and automated solutions' section). 
+![](./../../img/10_gen_ai_1.png)
+3. Inside 'JumpStart' page, search for 'Llama-2-7b-chat' in the top right search bar. 
+![](./../../img/10_gen_ai_2.png)
+4. Click 'View model' for 'Llama-2-7b-chat'. This will lead you to the page for this model.
+![](./../../img/10_gen_ai_3.png)
+5. In the model page, under the section for 'Deploy Model', expand the tab 'Deployment Configuration' and modify the 'Endpoint name' to be 'meta-textgeneration-llama-2-7b-chat'. Leave the rest of the settings as default.
+![](./../../img/10_gen_ai_4.png)
+6. Click 'Deploy'.
+![](./../../img/10_gen_ai_5.png)
+7. Wait till the 'Endpoint Status' to be 'In Service'. Then the deployment process has finished. You can continue with the notebook.
