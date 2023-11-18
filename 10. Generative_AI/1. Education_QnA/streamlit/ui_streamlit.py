@@ -13,38 +13,28 @@
 
 import base64
 import boto3
+import json
 import os
 import re
 import sagemaker
 import streamlit as st
+import time
 
-from llm_deploy import sm_endpt
 from sagemaker.session import Session
 from sagemaker.jumpstart.model import JumpStartModel
 from streamlit_chat import message
-from dotenv import load_dotenv
 
 
-load_dotenv()
-
-DEPLOY_KEY = os.getenv('DEPLOY_KEY')
-STREAMLIT_PASSWORD = os.getenv('STREAMLIT_PASSWORD')
-MAX_ENDPOINTS = 2
-MAX_G52XL_ENDPOINTS = 2
-MAX_G512XL_ENDPOINTS = 1
-
-
-
-# ----- SageMaker Setup -----
-sagemaker_session = Session()
-aws_role = sagemaker_session.get_caller_identity_arn()
-aws_region = boto3.Session().region_name
-sess = sagemaker.Session()
-
-print(f'Using role {aws_role} in region {aws_region}. boto3=={boto3.__version__}. sagemaker=={sagemaker.__version__}')
+# ----- Setup -----
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 if not os.path.exists('download_dir'):
     os.mkdir('download_dir')
+
+def read_json_file(filename):
+    with open(filename, 'r') as f:
+        return json.load(f)
 
 
 # ----- LLM Subroutines -----
@@ -70,20 +60,16 @@ def get_keywords_from_context(context):
     )
     return key_words
 
-def get_point_summary(para_list, n=5, max_new_tokens=100, seed=None):
+def get_point_summary(para_list, n=5, max_new_tokens=100):
     summary_list = []
     for i, x in enumerate(para_list[:n]):
-        if i == 0 and seed is not None:
-            summary_txt = summarize(x[:1500], max_new_tokens=max_new_tokens, seed=seed)
-        else:
-            summary_txt = summarize(x[:1500], max_new_tokens=max_new_tokens)
+        summary_txt = summarize(x[:1500], max_new_tokens=max_new_tokens)
         summary_list.append(summary_txt)
     return summary_list
 
 
 
 # ----- Comprehend -----
-
 comprehend = boto3.client('comprehend')
 
 def get_key_phrases(txt_list):
@@ -135,66 +121,17 @@ def get_key_phrases(txt_list):
 
 
 # ----- Streamlit  -----
-
 st.set_page_config(page_title='🎓 GenAI Demo for Education 🎓')
-
-
-response = sm_endpt.refresh_endpoints()
-print(f'Refreshing endpoints:\n{response}')
-if len (sm_endpt.__endpoints__) > 0:
-    endpoint_id = sm_endpt.__endpoints__[0]
-    response = sm_endpt.select_endpoint(endpoint_id)
-    print(f'Selected endpoint: {endpoint_id}')
-    print(response)
-
-
-# ----- Streamlit Password Checker-----
-
-def ui_password_verifier(skip_password=False):
-
-    if skip_password:
-        return True
-
-    def password_entered():
-        if st.session_state["password"] == STREAMLIT_PASSWORD:
-            st.session_state["password_correct"] = True
-            del st.session_state["password"]
-        else:
-            st.session_state["password_correct"] = False
-
-    if "password_correct" not in st.session_state:
-        st.text_input(
-            "Password",
-            type="password",
-            on_change=password_entered,
-            key="password"
-        )
-        return False
-
-    elif not st.session_state["password_correct"]:
-        st.text_input(
-            "Password",
-            type="password",
-            on_change=password_entered,
-            key="password"
-        )
-        st.error("ℹ️ Password is incorrect")
-        return False
-
-    else:
-        return True
 
 
 
 # ----- Streamlit Main -----
-if ui_password_verifier(skip_password=False):
+def streamlit_main():
     st.title('🎓 GenAI Demo for Education 🎓')
 
-    sm_endpt.refresh_endpoints()
     point_summary = None
 
-    tab_model, tab_context, tab_chat, tab_paper, tab_summary, tab_qa, tab_marking = st.tabs([
-        "Model",
+    tab_context, tab_chat, tab_paper, tab_summary, tab_qa, tab_marking = st.tabs([
         "Data Source",
         "Chat",
         "Paper",
@@ -202,100 +139,6 @@ if ui_password_verifier(skip_password=False):
         "Generate Q&A",
         "Marking"
         ])
-
-    # ..... [Tab] Model .....
-    with tab_model:
-        if len(sm_endpt.__endpoints__) > 0:
-            for endpt in sm_endpt.__endpoints__:
-                st.success(endpt, icon="✅")
-        else:
-            st.info('No endpoints are active', icon='ℹ️')
-
-        with st.form('selectendpointform', clear_on_submit=False):
-            endpoint_id = st.selectbox(
-                'Choose an endpoint',
-                list(sm_endpt.__endpoints__))
-
-            col_select_endpt, col_refresh_endpts, col_delete_endpt = st.columns([1, 1, 1])
-            with col_select_endpt:
-                submit_select = st.form_submit_button('Use this endpoint', disabled=len(sm_endpt.__endpoints__) == 0)
-            with col_refresh_endpts:
-                submit_endpointcheck = st.form_submit_button('Refresh endpoints')
-            with col_delete_endpt:
-                submit_delete = st.form_submit_button('Delete this endpoint', disabled=len(sm_endpt.__endpoints__) == 0)
-
-            if submit_select:
-                response = sm_endpt.select_endpoint(endpoint_id)
-                st.info(response)
-
-            if submit_endpointcheck:
-                try:
-                    response = sm_endpt.refresh_endpoints()
-                    if response['ResponseMetadata']['HTTPStatusCode'] == 200:
-                        st.info('Endpoints refreshed')
-                    else:
-                        st.error('Failed to refresh endpoints\nResponse:\n{response}')
-                except Exception as e:
-                    st.error(f'Error: {e}')
-
-            if submit_delete:
-                with st.spinner(f'Deleting {endpoint_id}...'):
-                    try:
-                        response = sm_endpt.delete_endpoint(endpoint_id)
-                        if response['ResponseMetadata']['HTTPStatusCode'] == 200:
-                            st.info('Endpoint deleted')
-                        else:
-                            st.error('Failed to delete endpoint\nResponse:\n{response}')
-                    except Exception as e:
-                        response = f'Error: {e}'
-                    st.info(response)
-
-                    # Refresh endpoints after endpoint is deleted
-                    response = sm_endpt.refresh_endpoints()
-
-
-        with st.form('deployform', clear_on_submit=True):
-            instance_type = st.selectbox(
-                'Select an instance type',
-                ('ml.g5.2xlarge', 'ml.g5.12xlarge'))
-
-            model_id = st.selectbox(
-                'Select a model to deploy',
-                ('huggingface-text2text-flan-t5-xl',
-                 'huggingface-text2text-flan-t5-xxl',
-                 'huggingface-llm-falcon-7b-bf16',
-                 'huggingface-llm-falcon-7b-instruct-bf16',
-                 'huggingface-llm-falcon-40b-bf16',
-                 'huggingface-llm-falcon-40b-instruct-bf16',
-                 'huggingface-textgeneration1-redpajama-incite-instruct-7B-v1-fp16'
-                ))
-
-            deploy_key = st.text_input('Deploy Token', type='password')
-            submit_deploy = st.form_submit_button('Deploy JumpStart')
-            if submit_deploy:
-                if deploy_key == DEPLOY_KEY:
-                    response = sm_endpt.refresh_endpoints()
-                    if len(sm_endpt.__endpoints__) >= MAX_ENDPOINTS:
-                        st.error('Deployment failed. Maximum number of endpoints has been reached')
-                    else:
-                        with st.spinner(f'Deploying JumpStart {model_id}...'):
-                            try:
-                                my_model = JumpStartModel(
-                                    model_id=model_id,
-                                    instance_type=instance_type)
-                                predictor = my_model.deploy()
-                                response = 'JumpStart Model deployed'
-                            except Exception as e:
-                                response = f'Error: {e}'
-                        st.info(response)
-                        response = sm_endpt.refresh_endpoints()
-                        st.info(response)
-                        response = sm_endpt.select_endpoint(model_id)
-                        st.info(response)
-                else:
-                    st.error('Please enter a valid deploy key')
-
-
 
     # ..... [Tab] Data Source .....
     with tab_context:
@@ -328,12 +171,40 @@ if ui_password_verifier(skip_password=False):
         message_history = []
         placeholder = st.empty()
         with st.form('myform', clear_on_submit=False):
-            data_source = st.selectbox('Data Source', (url, pdf_file))
+            data_source = st.selectbox(
+                'Data Source',
+                (url, pdf_file) if pdf_file else (url,)
+            )
             query_text = st.text_input('Enter your question:', value='What is quantum computing?')
-            submitted = st.form_submit_button('Submit')
+
+            col_submit_question, col_clear_chat = st.columns([1, 1])
+            with col_submit_question:
+                submitted = st.form_submit_button('Submit')
+            with col_clear_chat:
+                submit_clear_chat = st.form_submit_button('Clear chat')
+
+            if submit_clear_chat:
+                st.session_state.messages = []
+
+            if 'message' in st.session_state:
+                for message in st.session_state.messages:
+                    with st.chat_message(message["role"]):
+                        st.markdown(message["content"])
+
             if submitted:
-                message(query_text, is_user=True)
-                with st.spinner('Calculating...'):
+
+                st.chat_message("user").markdown(query_text)
+                x = {
+                        "role": "user",
+                        "content": query_text
+                    }
+                if 'messages' in st.session_state:
+                    st.session_state.messages.append(x)
+                else:
+                    st.session_state.messages = [x]
+
+                with st.chat_message("assistant"):
+                    message_placeholder = st.empty()
                     if data_source == pdf_file:
                         context = extract_context_from_file(f'download_dir/{pdf_file}')
                         response = ask(context[:2000], query_text)
@@ -341,32 +212,42 @@ if ui_password_verifier(skip_password=False):
                         context, _ = extract_context_from_url(url, first_para=1, last_para=7)
                         response = ask(context[:2000], query_text)
                     result.append(response)
-            if len(result):
-                message(response)
+    
+                    full_response = ''
+                    for chunk in response.split():
+                        full_response += chunk + " "
+                        time.sleep(0.05)
+                        message_placeholder.markdown(full_response + "▌")
+    
+                    message_placeholder.markdown(full_response)
+
 
     # ..... [Tab] Paper .....
     with tab_paper:
-        st.info(f'Data Source: {pdf_file}')
-        with st.form('paperform', clear_on_submit=True):
-            pdf_pages = extract_pages(f'download_dir/{pdf_file}', max_pages=12)
-            context = '\n\n'.join(pdf_pages[1:3] + pdf_pages[-3:])
-            print(context)
-
-            submit_gist = st.form_submit_button('What is the main gist of the paper?')
-            if submit_gist:
-                with st.spinner('Calculating...'):
-                    response = ask(context[:2000], 'What is the main gist of the paper?', max_new_tokens=200)
-                    st.info(response)
-            submit_prob = st.form_submit_button('What is the problem being solved?')
-            if submit_prob:
-                with st.spinner('Calculating...'):
-                    response = ask(context[:2000], 'What is the problem being solved?', max_new_tokens=200)
-                    st.info(response)
-            submit_concl = st.form_submit_button('What is the conclusion of the paper?')
-            if submit_concl:
-                with st.spinner('Calculating...'):
-                    response = ask(context[:2000], 'What is the conclusion of the paper?', max_new_tokens=200)
-                    st.info(response)
+        if pdf_file:
+            st.info(f'Data Source: {pdf_file}')
+            with st.form('paperform', clear_on_submit=True):
+                pdf_pages = extract_pages(f'download_dir/{pdf_file}', max_pages=12)
+                context = '\n\n'.join(pdf_pages[1:3] + pdf_pages[-3:])
+                print(context)
+    
+                submit_gist = st.form_submit_button('What is the main gist of the paper?')
+                if submit_gist:
+                    with st.spinner('Calculating...'):
+                        response = ask(context[:2000], 'What is the main gist of the paper?', max_new_tokens=200)
+                        st.info(response)
+                submit_prob = st.form_submit_button('What is the problem being solved?')
+                if submit_prob:
+                    with st.spinner('Calculating...'):
+                        response = ask(context[:2000], 'What is the problem being solved?', max_new_tokens=200)
+                        st.info(response)
+                submit_concl = st.form_submit_button('What is the conclusion of the paper?')
+                if submit_concl:
+                    with st.spinner('Calculating...'):
+                        response = ask(context[:2000], 'What is the conclusion of the paper?', max_new_tokens=200)
+                        st.info(response)
+        else:
+            st.info('No PDF file has been uploaded')
 
     # ..... [Tab] Summary .....
     with tab_summary:
@@ -378,50 +259,44 @@ if ui_password_verifier(skip_password=False):
 
             if submit_summary_n:
                 with st.spinner('Generating point-by-point summary...'):
-                    if data_source == pdf_file:
-                        st.info('Point-by-point summary for pdf files not yet implmented')
-                    else:
-                        _, para_list = extract_context_from_url(url)
-                        summary_list = get_point_summary(para_list, n=5)
-                        st.session_state.summary_list = summary_list
+                    _, para_list = extract_context_from_url(url)
+                    summary_list = get_point_summary(para_list, n=5)
+                    st.session_state.summary_list = summary_list
 
-                        response_list = []
-                        for i, x in enumerate(summary_list):
-                            response_txt = f'{i+1}. {x}'
-                            response_list.append(response_txt)
-                        st.info('\n'.join(response_list))
+                    response_list = []
+                    for i, x in enumerate(summary_list):
+                        response_txt = f'{i+1}. {x}'
+                        response_list.append(response_txt)
+                    st.info('\n'.join(response_list))
 
         with st.form('summaryquizform', clear_on_submit=False):
             submit_summary_q = st.form_submit_button('Create fill in the blanks quiz')
 
             if submit_summary_q:
                 with st.spinner('Removing key words using Amazon Comprehend...'):
-                    if data_source == pdf_file:
-                        st.info('Keyword removal for pdf files not yet implmented')
-                    else:
-                        if 'summary_list' not in st.session_state:
-                            _, para_list = extract_context_from_url(url)
-                            summary_list = get_point_summary(para_list, n=5)
-                            st.session_state.summary_list = summary_list
-                        response_list = []
-                        for i, txt in enumerate(st.session_state.summary_list):
-                            print(txt)
-                            key_phrases, key_phrase = get_key_phrases([txt])
-                            if len(key_phrases) > 0:
-                                if key_phrase in txt:
-                                    new_txt = re.sub(
-                                        pattern=key_phrase,
-                                        repl='_____', string=txt
-                                        )
-                                    response_list.append(
-                                        f'{+1}. {new_txt} (**Ans**: {key_phrase})'
+                    if 'summary_list' not in st.session_state:
+                        _, para_list = extract_context_from_url(url)
+                        summary_list = get_point_summary(para_list, n=5)
+                        st.session_state.summary_list = summary_list
+                    response_list = []
+                    for i, txt in enumerate(st.session_state.summary_list):
+                        print(txt)
+                        key_phrases, key_phrase = get_key_phrases([txt])
+                        if len(key_phrases) > 0:
+                            if key_phrase in txt:
+                                new_txt = re.sub(
+                                    pattern=key_phrase,
+                                    repl='_____', string=txt
                                     )
-                            else:
-                                print(f'No key phrases found: key_phrases={key_phrases}. key_phrase={key_phrase}')
                                 response_list.append(
-                                    f'{+1}. {txt}'
+                                    f'{+1}. {new_txt} (**Ans**: {key_phrase})'
                                 )
-                        st.markdown('\n'.join(response_list))
+                        else:
+                            print(f'No key phrases found: key_phrases={key_phrases}. key_phrase={key_phrase}')
+                            response_list.append(
+                                f'{+1}. {txt}'
+                            )
+                    st.markdown('\n'.join(response_list))
 
         with st.form('summaryform', clear_on_submit=False):
             submit_summary = st.form_submit_button('Summarize')
@@ -447,55 +322,84 @@ if ui_password_verifier(skip_password=False):
 
             if submit_qa:
                 with st.spinner('Generation Q&A pairs...'):
-                    if data_source == pdf_file:
-                        st.info('Q&A pair generation for pdf files not yet implmented')
-                    else:
-                        _, para_list = extract_context_from_url(url)
-                        qn_list, ans_list = create_qna_pairs_from_paras(para_list[:5])
+                    _, para_list = extract_context_from_url(url)
+                    qn_list, ans_list = create_qna_pairs_from_paras(para_list[:5])
 
-                        response_list = []
-                        for i in range(len(qn_list)):
-                            response_txt = f'{i+1}. **Question**: {qn_list[i]} **Answer**: {ans_list[i]}'
-                            response_list.append(response_txt)
-                            # st.info(response_txt)
-                        st.markdown('\n'.join(response_list))
+                    response_list = []
+                    for i in range(len(qn_list)):
+                        response_txt = f'{i+1}. **Question**: {qn_list[i]} **Answer**: {ans_list[i]}'
+                        response_list.append(response_txt)
+                        # st.info(response_txt)
+                    st.markdown('\n'.join(response_list))
 
     # ..... [Tab] Marking .....
     with tab_marking:
-        marking_url = 'https://en.wikipedia.org/wiki/Quantum_computing'
-        st.info(f'Data Source: {marking_url}')
         with st.form('markingform', clear_on_submit=False):
-            st.markdown('### Quiz')
-            st.info('What is quantum computing? (2 marks)')
-            answer_text = st.text_input('Enter your answer:', value='Quantum computing involves using computers that make use of quantum mechanics')
-            submit_marking = st.form_submit_button('Check this answer')
+            st.markdown('### Practice Quiz')
 
-            submit_report = False
+            quiz_file = 'practice_quiz.json'
+            quiz = read_json_file(f'download_dir/{quiz_file}')
+
+            answer_list = []
+            for i, q in enumerate(quiz):
+                question = q['Question']
+                evaluate = q['Evaluate']
+                sample_answer = q['Sample answer']
+                points = sum([e['Marks'] for e in evaluate])
+                st.markdown(f'**{i+1}. {question}** ({points} points)')
+    
+                if len(quiz) == 1:
+                    answer_text = st.text_area('Enter your answer:', value=sample_answer, height=20)
+                else:
+                    answer_text = st.text_input('Enter your answer:', value=sample_answer)
+                answer_list.append(answer_text)
+
+            submit_marking = st.form_submit_button(
+                'Submit for evaluation')
+
+            final_points = 0
+            maximum_points = 0
             if submit_marking:
                 with st.spinner('Calculating...'):
-                    context, _ = extract_context_from_url(marking_url, first_para=1, last_para=7)
+                    for i, q in enumerate(quiz):
+                        question = q['Question']
+                        evaluate = q['Evaluate']
+    
+                        answer = answer_list[i]
+                        st.markdown(f"**{i+1}. Question**: {question}\n**Your Answer**: {answer}")
+    
+                        # Grading
+                        points = 0
+                        for j, e in enumerate(evaluate):
+                            criteria = e['Criteria']
+                            hint_text = e['Hint']
+                            m = int(e['Marks'])
+                            maximum_points += m
+    
+                            prompt = """Given the following statment <statement>{answer}</statement> state whether it meets the following criteria <criteria>{criteria}</criteria>. Answer only with yes or no""".format(answer=answer, criteria=criteria)
+                            response = generate_text_from_prompt(
+                                prompt, temperature=0.04, max_tokens_to_sample=2
+                            )
+    
+                            response = response.strip().lower()
+                            if response.startswith('answer: '):
+                                response = response.replace('answer: ', '')
+    
+                            if response == 'yes':
+                                unit = 'point' if m == 1 else 'points'
+                                st.success(f'✅  {criteria} {response} ({m} {unit})')
+                                points += m
+                            elif response == 'no':
+                                st.error(f'❌  {criteria} {response} (0 points)')
+                            else:
+                                st.error(f'❌  {criteria} {response} (0 points)')
+                                # st.info(f'ℹ️ {criteria} {response}')
+                        
+                        st.info(f'ℹ️ Total points: {points}')
+                        final_points += points
 
-                    # Grading
-                    query_list = [
-                        'Does this answer mention the use of quantum phenomena?',
-                        'Does this answer quantum computing speedups over classical computing?'
-                    ]
-                    marks = 0
-                    for query_text in query_list:
-                        prompt = f"""Answer: {answer_text}
-                        Question: {query_text}"""
-                        response = generate_text_from_prompt(prompt, kwargs={'temperature': 0.05, 'max_new_tokens': 5})
-                        if response.lower() == 'yes':
-                            st.success(f'✅  {query_text} {response} (1 mark)')
-                            marks += 1
-                        elif response.lower() == 'no':
-                            st.error(f'❌  {query_text} {response} (0 marks)')
-                        else:
-                            st.error(f'❌  {query_text} no (0 marks)')
-                            # st.info(f'ℹ️ {query_text} {response}')
-                    
-                    st.info(f'ℹ️ Total marks: {marks}')
+                st.info(f'Final points: {final_points} out of a maximum of {maximum_points}')
+     
 
-            submit_report = st.form_submit_button('Report Issue')
-            if submit_report:
-                st.info('ℹ️ Thank you for reporting. This will be sent for review')
+if __name__ == '__main__':
+    streamlit_main()
