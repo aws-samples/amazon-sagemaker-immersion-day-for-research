@@ -1,0 +1,45 @@
+[
+    {
+        "Question": "What storage must always be attached to an EC2 instance?",
+        "Evaluate": [
+            {
+                "Criteria": "Does this answer mention Elastic Block Store or EBS?",
+                "Hint": "Here are some storage services available on AWS: Simple Storage Service, Elastic Block Store, Elastic File System, FSx for Windows, FSx for Lustre, FSx for NetApp Ontap, FSx for OpenZFS",
+                "Marks": 2
+            }
+        ],
+        "Sample answer": "Elastic Block Store or EBS"
+    },
+    {
+        "Question": "Describe the DynamoDB service",
+        "Evaluate": [
+            {
+                "Criteria": "Does this answer mention that DynamoDB is serverless?",
+                "Hint": "Think about whether DynamoDB is serverless or non-serverless",
+                "Marks": 1
+            },
+            {
+                "Criteria": "Does this answer mention that DynamoDB is a NoSQL database?",
+                "Hint": "Think of relational vs non-relational databases",
+                "Marks": 2
+            }
+        ],
+        "Sample answer": "DynamoDB is a database service"
+    },
+    {
+        "Question": "Tell me about SageMaker on AWS",
+        "Evaluate": [
+            {
+                "Criteria": "Does this answer mention that SageMaker is used for Machine Learning workloads?",
+                "Hint": "Think AI/ML",
+                "Marks": 1
+            },
+            {
+                "Criteria": "Does this answer mention that SageMaker is an end-to-end service covering the entire machine learning pipeline?",
+                "Hint": "Think about what parts of the machine learning pipeline are covered by SageMaker",
+                "Marks": 2
+            }
+        ],
+        "Sample answer": "Amazon SageMaker is the service for running AI/ML on AWS"
+    }
+]
